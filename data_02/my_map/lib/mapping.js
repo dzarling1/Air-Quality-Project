@@ -104,7 +104,7 @@ function onMapMove() {
             console.log(lons);
             for (i = 0; i < lats.length; i++) {
                 for (i = 0; i < data2.results.length; i++){
-                    if(lats[i] === data2.results[j].coordinates.latitude
+                    if(lats[i] === data2.results[j].coordinates.latitude && lons[i] === data2.results[j].coordinates.longitude)
                         //add to sum
                 }
                 //calculate averages for this location for each thing found
