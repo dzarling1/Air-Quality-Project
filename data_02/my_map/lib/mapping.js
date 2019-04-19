@@ -82,23 +82,22 @@ function onMapMove() {
             var i;
             var lats;
             var logs;
-              for (i = 0; i < 10; i++) {
+            for (i = 0; i < 10; i++) {
                 //console.log("Locations: " +data2.results[i].location);
-                 lats = data2.results[i].coordinates.latitude;
-                 logs = data2.results[i].coordinates.longitude;
-                 //console.log("cords: " +lats + " l " + logs);
-                 var markers = L.marker([lats, logs]).bindPopup("Location: "+data2.results[i].location +"<br>"+ "Parameter: " +data2.results[i].parameter).addTo(map);;
-                  map.addLayer(markers);
-                    var firstTable = new Vue({
-                      el: '#firstTable',
-                      data: {
+                lats = data2.results[i].coordinates.latitude;
+                logs = data2.results[i].coordinates.longitude;
+                //console.log("cords: " +lats + " l " + logs);
+                var markers = L.marker([lats, logs]).bindPopup("Location: "+data2.results[i].location +"<br>"+ "Parameter: " +data2.results[i].parameter).addTo(map);
+                map.addLayer(markers);
+                var firstTable = new Vue({
+                    el: '#firstTable',
+                    data: {
                         rows: [
-                          { Location: data2.results[i].location, City: data2.results[i].city, Coordinates: data2.results[i].coordinates, Date: data2.results[i].date }
+                            { Location: data2.results[i].location, City: data2.results[i].city, Coordinates: data2.results[i].coordinates, Date: data2.results[i].date }
                         ]
-                      }
-                    });
-
-                 }
+                    }
+                });
+            }
         }
     };
     xhttp.open("GET", "https://api.openaq.org/v1/measurements?limit=10000&coordinates=" + document.getElementById("lat").value + "," + document.getElementById("lon").value + "&radius=" + radius, true);
