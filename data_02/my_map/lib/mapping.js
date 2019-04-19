@@ -82,9 +82,27 @@ function onMapMove() {
             console.log(data2);
             
             var i;
-            var lats;
-            var logs;
-            for (i = 0; i < 10; i++) {
+            var j;
+            var lats = new Array();
+            var lons = new Array();
+            var flag = 0;
+            
+            
+            for (i = 0; i < data2.results.length; i++){
+                for(j = 0; j < lats.length; j++) {
+                    if (data2.results[i].coordinates.latitude === lats[j] && data2.results[i].coordinates.longitude === lons[j]){
+                        flag = 1;
+                    }
+                }
+                if(flag === 0) {
+                    lats[j] = data2.results[i].coordinates.latitude;
+                    lons[j] = data2.results[i].coordinates.longitude;
+                }
+                flag = 0;
+            }
+            console.log(lats);
+            console.log(lons);
+            /*for (i = 0; i < 10; i++) {
                 //console.log("Locations: " +data2.results[i].location);
                 lats = data2.results[i].coordinates.latitude;
                 logs = data2.results[i].coordinates.longitude;
@@ -101,10 +119,10 @@ function onMapMove() {
             }
             markers.on('mouseover', function(event){
                 markers.openPopup();
-                });
-                markers.on('mouseout', function(event){
+            });
+            markers.on('mouseout', function(event){
                 markers.closePopup();
-                });
+            });*/
         }
     };
     xhttp.open("GET", "https://api.openaq.org/v1/measurements?limit=100&coordinates=" + document.getElementById("lat").value + "," + document.getElementById("lon").value + "&radius=" + radius, true);
