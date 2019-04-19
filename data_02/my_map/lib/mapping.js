@@ -13,7 +13,7 @@ function moveByLocation() {
             console.log(lon1);
             document.getElementById("lon").value = lon1;
             var cords = L.latLng(document.getElementById("lat").value, document.getElementById("lon").value);
-            map2.panTo(cords);
+            map.panTo(cords);
         }
     };
     req.open("GET", "https://nominatim.openstreetmap.org/search?q=" + document.getElementById("loc").value + "&format=json&accept-language=en", true);
@@ -24,17 +24,17 @@ function moveByLocation() {
 
 function moveByLatLon() {
     var cords = L.latLng(document.getElementById("lat").value, document.getElementById("lon").value);
-    map2.panTo(cords);
-    var cord = map2.getCenter();
+    map.panTo(cords);
+    var cord = map.getCenter();
     console.log(cord);
 }
 
-var map2 = L.map('map2', {
+var map = L.map('map', {
     center: ([44.953705, -93.089958]),
     zoom: 10
 });
 
-var cord = map2.getCenter();
+var cord = map.getCenter();
 console.log(cord);
 /*
     var countriesLayer = L.geoJson(countries).addTo(map);
@@ -46,10 +46,10 @@ var layer = new L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.pn
     minZoom: 9,
     id: 'mapbox.streets',
     accessToken: 'pk.eyJ1IjoiYmJyb29rMTU0IiwiYSI6ImNpcXN3dnJrdDAwMGNmd250bjhvZXpnbWsifQ.Nf9Zkfchos577IanoKMoYQ'
-}).addTo(map2);
+}).addTo(map);
 
 function onMapMove() {
-    var cord = map2.getCenter();
+    var cord = map.getCenter();
     document.getElementById("lat").value = cord.lat;
     document.getElementById("lon").value = cord.lng;
     
@@ -68,8 +68,8 @@ function onMapMove() {
     req.open("GET", "https://nominatim.openstreetmap.org/reverse?format=json&lat=" + document.getElementById("lat").value + "&lon=" + document.getElementById("lon").value, true);
     req.send();
     
-    var bounds = map2.getBounds(); 
-    console.log(map2.getBounds());
+    var bounds = map.getBounds(); 
+    console.log(map.getBounds());
     var radius = bounds._northEast.distanceTo(bounds._southWest)/2;
     console.log("radius: " + radius);
     
@@ -103,4 +103,4 @@ function onMapMove() {
     xhttp.open("GET", "https://api.openaq.org/v1/measurements?limit=10000&coordinates=" + document.getElementById("lat").value + "," + document.getElementById("lon").value + "&radius=" + radius, true);
     xhttp.send();
 }
-map2.on('moveend', onMapMove);
+map.on('moveend', onMapMove);
