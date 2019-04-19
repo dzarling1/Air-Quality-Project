@@ -98,9 +98,15 @@ function onMapMove() {
                     }
                 });
             }
+            markers.on('mouseover', function(event){
+                markers.openPopup();
+                });
+                markers.on('mouseout', function(event){
+                markers.closePopup();
+                });
         }
     };
-    xhttp.open("GET", "https://api.openaq.org/v1/measurements?limit=10000&coordinates=" + document.getElementById("lat").value + "," + document.getElementById("lon").value + "&radius=" + radius, true);
+    xhttp.open("GET", "https://api.openaq.org/v1/measurements?limit=100&coordinates=" + document.getElementById("lat").value + "," + document.getElementById("lon").value + "&radius=" + radius, true);
     xhttp.send();
 }
 map.on('moveend', onMapMove);
