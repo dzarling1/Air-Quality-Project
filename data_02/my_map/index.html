@@ -11,12 +11,14 @@
     <link rel="stylesheet" href="lib/leaflet/leaflet.css" />
     <script src="lib/leaflet/leaflet.js"></script>
     <script src="lib/distance-calc.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
 </head>
 
 <body>
-    <center>
-        <h1>My Maps</h1> Location:
+    <div style="float: left; position: relative;">
+        <h1>Map1</h1>
+        Location:
         <input type="text" id="loc">
         <br>
         <button onclick="moveByLocation()">Submit by location</button>
@@ -26,20 +28,32 @@
         <input type="text" id="lon">
         <br>
         <button onclick="moveByLatLon()">Submit</button>
-    </center>
-    <div id="maps">
-        <center>
-            <!--<div id = "map" style="width: 600px; height:460px; margin:10px; border:1px solid black
-"></div> -->
-            <div id="map2" style="width: 600px; height:460px; margin:10px; border:1px solid black">
-            </div>
-        </center>
     </div>
+     <div style="float: right; position: relative;">
+        <h1>Map2</h1>
+        Location:
+        <input type="text" id="loc2">
+        <br>
+        <button onclick="moveByLocation2()">Submit by location</button>
+        <br> Lat:
+        <input type="text" id="lat2">
+        <br> Lon:
+        <input type="text" id="lon2">
+        <br>
+        <button onclick="moveByLatLon2()">Submit</button>
+    </div>
+     <div class="container">
+            <div id="map">
+            </div>
+            <div id="map2">
+            </div>
+        
+         <script src="lib/mapping2.js">
 
-    <script src="lib/mapping.js">
-    	
-    </script> 
-<button type="button" onclick="loadDoc()">Request data</button>
+        </script> <script src="lib/mapping.js">
+        </script>
+    </div>
+    
     <script>
         var currDate = new Date();
         var priorDate = new Date().setDate(currDate.getDate()-30);
@@ -48,6 +62,26 @@
         console.log("Prior Date: " + dateString);
         onMapMove();
     </script>
+    
+    <table id="firstTable">
+        <thead>
+
+            <tr>
+              <th>Location</th>
+              <th>City</th>
+              <th>Coordinates</th>
+              <th>Date</th>
+            </tr>
+    </thead>
+  <tbody>
+    <tr v-for="row in rows">
+      <td>{{row.Location}}</td>
+      <td>{{row.City}}</td>
+      <td>{{row.Coordinates}}</td>
+      <td>{{row.Date}}</td>
+    </tr>
+  </tbody>
+</table>
 
 </body>
 
