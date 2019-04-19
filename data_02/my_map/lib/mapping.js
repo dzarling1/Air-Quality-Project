@@ -1,4 +1,6 @@
+var app;
 var data2;
+
 function moveByLocation() {
     var req = new XMLHttpRequest();
     req.onreadystatechange = function() {
@@ -89,14 +91,13 @@ function onMapMove() {
                 //console.log("cords: " +lats + " l " + logs);
                 var markers = L.marker([lats, logs]).bindPopup("Location: "+data2.results[i].location +"<br>"+ "Parameter: " +data2.results[i].parameter).addTo(map);
                 map.addLayer(markers);
-                var firstTable = new Vue({
+                app = new Vue({
                     el: '#firstTable',
                     data: {
-                        rows: [
-                            { Location: data2.results[i].location, City: data2.results[i].city, Coordinates: data2.results[i].coordinates, Date: data2.results[i].date }
-                        ]
+                        table: []
                     }
                 });
+                app.table = data2;
             }
         }
     };
