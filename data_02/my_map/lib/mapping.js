@@ -97,11 +97,21 @@ function onMapMove() {
                 if(flag === 0) {
                     lats[j] = data2.results[i].coordinates.latitude;
                     lons[j] = data2.results[i].coordinates.longitude;
+                    //Add code to create marker here for this unique location
                 }
                 flag = 0;
             }
             console.log(lats);
             console.log(lons);
+            for (i = 0; i < lats.length; i++) {
+                for (i = 0; i < data2.results.length; i++){
+                    if(lats[i] === data2.results[j].coordinates.latitude
+                        //add to sum
+                }
+                //calculate averages for this location for each thing found
+                
+                //Add marker for this location
+            }
             /*for (i = 0; i < 10; i++) {
                 //console.log("Locations: " +data2.results[i].location);
                 lats = data2.results[i].coordinates.latitude;
