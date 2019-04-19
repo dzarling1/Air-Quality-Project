@@ -1,3 +1,4 @@
+var data2;
 function moveByLocation() {
     var req = new XMLHttpRequest();
     req.onreadystatechange = function() {
@@ -72,8 +73,29 @@ function onMapMove() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            var data2 = JSON.parse(xhttp.responseText);
+            data2 = JSON.parse(xhttp.responseText);
             console.log(data2);
+            
+            var i;
+            var lats;
+            var logs;
+              for (i = 0; i < 10; i++) {
+                //console.log("Locations: " +data2.results[i].location);
+                 lats = data2.results[i].coordinates.latitude;
+                 logs = data2.results[i].coordinates.longitude;
+                 //console.log("cords: " +lats + " l " + logs);
+                 var markers = L.marker([lats, logs]).bindPopup("Location: "+data2.results[i].location +"<br>"+ "Parameter: " +data2.results[i].parameter).addTo(map);;
+                  map.addLayer(markers);
+                    var firstTable = new Vue({
+                      el: '#firstTable',
+                      data: {
+                        rows: [
+                          { Location: data2.results[i].location, City: data2.results[i].city, Coordinates: data2.results[i].coordinates, Date: data2.results[i].date }
+                        ]
+                      }
+                    });
+
+                 }
         }
     };
     xhttp.open("GET", "https://api.openaq.org/v1/measurements?limit=10000&coordinates=" + document.getElementById("lat").value + "," + document.getElementById("lon").value + "&radius=" + radius, true);
