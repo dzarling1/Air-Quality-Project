@@ -58,7 +58,10 @@ function onMapMove() {
             // successfully received data!
             var data1 = JSON.parse(req.responseText);
             console.log(data1);
-            document.getElementById("loc").value = data1.address.city;
+            if(typeof data1.address.city !== 'undefined')
+                document.getElementById("loc").value = data1.address.city;
+            else
+                document.getElementById("loc").value = data1.address.county;
         }
     };
     req.open("GET", "https://nominatim.openstreetmap.org/reverse?format=json&lat=" + document.getElementById("lat").value + "&lon=" + document.getElementById("lon").value, true);
