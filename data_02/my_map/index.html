@@ -10,7 +10,6 @@
         <!-- Leaflet -->
         <link rel="stylesheet" href="lib/leaflet/leaflet.css" />
         <script src="lib/leaflet/leaflet.js"></script>
-        <script src="lib/distance-calc.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
     </head>
@@ -61,25 +60,26 @@
             priorDate = new Date(priorDate);
             var dateString = priorDate.toDateString();
             console.log("Prior Date: " + dateString);
-            onMapMove();
+            onMapMove(new Date().setDate(currDate.getDate()-1));
         </script>
         
         <table id="firstTable">
             <thead>
-
                 <tr>
                     <th>Location</th>
-                    <th>City</th>
-                    <th>Coordinates</th>
                     <th>Date</th>
+                    <th>Ozone</th>
+                    <th>PM2.5</th>
+                    <th>PM10</th>
+                    <th>CO</th>
+                    <th>NO2</th>
+                    <th>SO2</th>
                 </tr>
         </thead>
         <tbody>
-        <tr v-for="row in rows">
-            <td>{{row.Location}}</td>
-            <td>{{row.City}}</td>
-            <td>{{row.Coordinates}}</td>
-            <td>{{row.Date}}</td>
+        <tr v-for="item in table">
+            <td>{"lat: " + {item.coordinates.latitude} + ", lon: "+ {item.coordinates.longitude}}</td>
+            <td>{{item.date.utc}}</td>
         </tr>
         </tbody>
         </table>

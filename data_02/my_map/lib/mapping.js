@@ -1,4 +1,6 @@
+var app;
 var data2;
+
 function moveByLocation() {
     var req = new XMLHttpRequest();
     req.onreadystatechange = function() {
@@ -80,9 +82,35 @@ function onMapMove() {
             console.log(data2);
             
             var i;
-            var lats;
-            var logs;
-            for (i = 0; i <Object.keys(data2).length; i++) {
+            var j;
+            var lats = new Array();
+            var lons = new Array();
+            var flag = 0;
+                 
+            for (i = 0; i < data2.results.length; i++){
+                for(j = 0; j < lats.length; j++) {
+                    if (data2.results[i].coordinates.latitude === lats[j] && data2.results[i].coordinates.longitude === lons[j]){
+                        flag = 1;
+                    }
+                }
+                if(flag === 0) {
+                    lats[j] = data2.results[i].coordinates.latitude;
+                    lons[j] = data2.results[i].coordinates.longitude;
+                }
+                flag = 0;
+            }
+            console.log(lats);
+            console.log(lons);
+            for (i = 0; i < lats.length; i++) {
+                for (i = 0; i < data2.results.length; i++){
+                    if(lats[i] === data2.results[j].coordinates.latitude && lons[i] === data2.results[j].coordinates.longitude)
+                        //add to sum
+                }
+                //calculate averages for this location for each thing found
+                
+                //Add marker for this location
+            }
+            /*for (i = 0; i < 10; i++) {
                 //console.log("Locations: " +data2.results[i].location);
                 lats = data2.results[i].coordinates.latitude;
                 logs = data2.results[i].coordinates.longitude;
@@ -90,15 +118,21 @@ function onMapMove() {
                 var markers = L.marker([lats, logs]).bindPopup("Location: "+data2.results[i].location +"<br>"+ "Parameter: " +data2.results[i].parameter).addTo(map);
                 map.addLayer(markers);
 
-                var firstTable = new Vue({
+                app = new Vue({
                     el: '#firstTable',
                     data: {
-                        rows: [
-                            { Location: data2.results[i].location, City: data2.results[i].city, Coordinates: data2.results[i].coordinates, Date: data2.results[i].date }
-                        ]
+                        table: []
                     }
                 });
+                app.table = data2;
             }
+
+            markers.on('mouseover', function(event){
+                markers.openPopup();
+            });
+            markers.on('mouseout', function(event){
+                markers.closePopup();
+            });*/
         }
     };
     xhttp.open("GET", "https://api.openaq.org/v1/measurements?limit=100&coordinates=" + document.getElementById("lat").value + "," + document.getElementById("lon").value + "&radius=" + radius, true);
