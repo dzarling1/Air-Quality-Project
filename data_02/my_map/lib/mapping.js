@@ -97,7 +97,6 @@ function onMapMove() {
                 if(flag === 0) {
                     lats[j] = data2.results[i].coordinates.latitude;
                     lons[j] = data2.results[i].coordinates.longitude;
-                    //Add code to create marker here for this unique location
                 }
                 flag = 0;
             }
