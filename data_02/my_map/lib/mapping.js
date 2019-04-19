@@ -51,6 +51,19 @@ function onMapMove() {
     var cord = map2.getCenter();
     document.getElementById("lat").value = cord.lat;
     document.getElementById("lon").value = cord.lng;
+    
+    var req = new XMLHttpRequest();
+    req.onreadystatechange = function() {
+        if (req.readyState == 4 && req.status == 200) {
+            // successfully received data!
+            var data1 = JSON.parse(req.responseText);
+            console.log(data1);
+            document.getElementById("loc").value = data1.address.city;
+        }
+    };
+    req.open("GET", "https://nominatim.openstreetmap.org/reverse?format=json&lat=" + document.getElementById("lat").value + "&lon=" + document.getElementById("lon").value, true);
+    req.send();
+    
     var bounds = map2.getBounds(); 
     console.log(map2.getBounds());
     var radius = bounds._northEast.distanceTo(bounds._southWest)/2;
