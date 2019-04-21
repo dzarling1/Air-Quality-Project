@@ -111,8 +111,8 @@ function onMapMove() {
                 }
                 //calculate averages for this location for each thing found
                         var markers = L.marker([data2.results[j].coordinates.latitude, data2.results[j].coordinates.longitude])
-                        .bindPopup("Location: "+data2.results[j].location +"<br>"+ "Parameter: " +data2.results[j].parameter).addTo(map);
-                         map.addLayer(markers);
+                        .bindPopup("Value: "+data2.results[j].value +"<br>"+ "Parameter: " +data2.results[j].parameter +"<br>"+ "Coordinates: " +data2.results[j].coordinates.latitude+" , " + data2.results[j].coordinates.longitude).addTo(map);
+                        map.addLayer(markers);
                         markers.on('mouseover',function(ev) {
                           markers.openPopup();
                         });

@@ -505,6 +505,27 @@
      height: auto;
 }
 
+
+.fieldBlock
+    {
+    width: flex;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+  float: left;
+    }
+
+    .fieldBlock1
+    {
+    width: flex;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+  float: right;
+    }
+
 table  {
   font-family: 'Open Sans', sans-serif;
   width: 750px;
