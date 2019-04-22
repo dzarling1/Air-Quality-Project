@@ -109,8 +109,8 @@ function onMapMove2() {
                     }
                 }
                 //calculate averages for this location for each thing found
-                        var markers = L.marker([data2.results[j].coordinates.latitude, data2.results[j].coordinates.longitude])
-                        .bindPopup("Value: "+data2.results[j].value +"<br>"+ "Parameter: " +data2.results[j].parameter +"<br>"+ "Coordinates: " +data2.results[j].coordinates.latitude+" , " + data2.results[j].coordinates.longitude).addTo(map2);
+                        var markers = L.marker([data2.results[j].coordinates.latitude, data2.results[j].coordinates.longitude]).addTo(map2)
+                        .bindPopup("Value: "+data2.results[j].value +"<br>"+ "Parameter: " +data2.results[j].parameter +"<br>"+ "Coordinates: " +data2.results[j].coordinates.latitude+" , " + data2.results[j].coordinates.longitude);
                         map2.addLayer(markers);
                         markers.on('mouseover',function(ev) {
                           markers.openPopup();

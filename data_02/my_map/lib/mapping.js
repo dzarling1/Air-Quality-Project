@@ -178,27 +178,27 @@ function onMapMove() {
                         values[i][k] = values[i][k]/counts[i][k];
                 }
                 //calculate averages for this location for each thing found
-                       /*
-                        var markers = L.marker([data2.results[j].coordinates.latitude, data2.results[j].coordinates.longitude])
-                        .bindPopup("Value: "+data2.results[j].value +"<br>"+ "Parameter: " +data2.results[j].parameter +"<br>"+ "Coordinates: " +data2.results[j].coordinates.latitude+" , " + data2.results[j].coordinates.longitude).addTo(map);
-                        map.addLayer(markers);
-                        markers.on('mouseover',function(ev) {
-                          markers.openPopup();
-                        });
-                        */
-
                 //Add marker for this location
-                var markers = L.marker([lats[i], lons[i]])
-                .bindPopup("Value: "+ values[i][0] +"<br>"+ "Parameter: Ozone" +"<br>"+ "Coordinates: " + lats[i] +" , " + lons[i]).addTo(map);
-                map.addLayer(markers);
-                markers.on('mouseover',function(ev) {
-                    markers.openPopup();
+            
+                var markers = L.marker([lats[i], lons[i]]).addTo(map)
+                .bindPopup("Ozone: "+ values[i][0]+" " + units[0]+"<br>"+
+                    "PM2.5: "+ values[i][1]+ " " + units[1] + "<br>"+
+                    "PM10: " + values[i][2] + "  "+units[2] + "<br>"+
+                    "CO: " + values[i][3]+ " " + units[3]+ "<br>"+
+                    "NO2: "+  values[i][4]+ " " + units[4]+ "<br>"+
+                    "SO2: "+  values[i][5] + "  "+units[5]+"<br>"+
+                    "Coordinates: " + lats[i] +" , " + lons[i])
+                //map.addLayer(markers);
+                markers.on("mouseover", function(e) {
+                     markers.openPopup();
                 });
-            }
-
-}
-           
-
+                
+/*
+                .on("mouseout", function(e) {
+                     markers.closePopup();
+                });
+  */              
+        }
             console.log(values);
             console.log(counts);
             console.log(units);
@@ -222,7 +222,7 @@ function onMapMove() {
             }
 */
         }
-
+    };
     xhttp.open("GET", "https://api.openaq.org/v1/measurements?limit=100&coordinates=" + document.getElementById("lat").value + "," + document.getElementById("lon").value + "&radius=" + radius, true);
     xhttp.send();
 }
