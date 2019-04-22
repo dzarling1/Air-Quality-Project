@@ -173,7 +173,10 @@ function onMapMove() {
                         //add to sum
                     }
                 }
-                //values[][];
+                for (k = 0; k < 6; k++) {
+                    if(values[i][k] !== 0)
+                        values[i][k] = values[i][k]/counts[i][k];
+                }
                 //calculate averages for this location for each thing found
                        /*
                         var markers = L.marker([data2.results[j].coordinates.latitude, data2.results[j].coordinates.longitude])
