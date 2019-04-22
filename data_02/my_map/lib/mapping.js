@@ -85,9 +85,9 @@ function onMapMove() {
             var j;
             var lats = new Array();
             var lons = new Array();
-            var values = [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]];
+            var values = new Array();
             var units = new Array();
-            var counts = [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]];
+            var counts = new Array();
             var flag = 0;
                  
             for (i = 0; i < data2.results.length; i++){
@@ -97,6 +97,8 @@ function onMapMove() {
                     }
                 }
                 if(flag === 0) {
+                    values[j] = [0, 0, 0, 0, 0, 0];
+                    counts[j] = [0, 0, 0, 0, 0, 0];
                     lats[j] = data2.results[i].coordinates.latitude;
                     lons[j] = data2.results[i].coordinates.longitude;
                 }
@@ -171,6 +173,7 @@ function onMapMove() {
                         //add to sum
                     }
                 }
+                //values[][];
                 //calculate averages for this location for each thing found
                        /*
                         var markers = L.marker([data2.results[j].coordinates.latitude, data2.results[j].coordinates.longitude])
