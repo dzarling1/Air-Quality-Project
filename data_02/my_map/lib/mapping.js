@@ -116,10 +116,13 @@ function onMapMove() {
                         markers.on('mouseover',function(ev) {
                           markers.openPopup();
                         });
+                        
                 //Add marker for this location
 
 
             }
+
+           
             /*for (i = 0; i < 10; i++) {
                 //console.log("Locations: " +data2.results[i].location);
                 lats = data2.results[i].coordinates.latitude;
@@ -138,7 +141,7 @@ function onMapMove() {
             }
 */
         }
-    };
+
     xhttp.open("GET", "https://api.openaq.org/v1/measurements?limit=100&coordinates=" + document.getElementById("lat").value + "," + document.getElementById("lon").value + "&radius=" + radius, true);
     xhttp.send();
 }
