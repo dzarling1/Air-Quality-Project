@@ -1,5 +1,11 @@
-var app;
-var data2;
+var app = new Vue({
+    el: "#app",
+    data: {
+        table: [],
+        locations: [],
+        date: []
+    }
+});
 
 function moveByLocation() {
     var req = new XMLHttpRequest();
@@ -91,13 +97,17 @@ function onMapMove() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            data2 = JSON.parse(xhttp.responseText);
+            var data2 = JSON.parse(xhttp.responseText);
             console.log(data2);
-
+            app.table = data2.results;
+            
             var i;
             var j;
+            var k;
             var lats = new Array();
             var lons = new Array();
+            var locations = new Array();
+            var dates = new Array();
             var values = new Array();
             var units = new Array();
             var counts = new Array();
@@ -114,12 +124,34 @@ function onMapMove() {
                     counts[j] = [0, 0, 0, 0, 0, 0];
                     lats[j] = data2.results[i].coordinates.latitude;
                     lons[j] = data2.results[i].coordinates.longitude;
+                    locations[j] = [data2.results[i].coordinates.latitude, data2.results[i].coordinates.longitude];
+                    dates[j] = [];
                 }
                 flag = 0;
             }
+            flag = 0;
             console.log(lats);
             console.log(lons);
-
+            app.locations = locations;
+            for (i = 0; i < lats.length; i++) {
+                for (j = 0; j < data2.results.length; j++) {
+                    if (lats[i] === data2.results[j].coordinates.latitude && lons[i] === data2.results[j].coordinates.longitude) {
+                        for (k = 0; k < dates[i].length; k++) {
+                            if(dates[i][k] === data2.results[j].date.local) {
+                                flag = 1;
+                            }
+                        }
+                        if(flag === 0) {
+                            dates[i][k] = data2.results[j].date.local;
+                        }
+                        flag = 0;
+                    }
+                }
+            }
+            
+            console.log(dates);
+            app.date = dates
+            
             for (i = 0; i < lats.length; i++) {
                 for (j = 0; j < data2.results.length; j++) {
                     if (lats[i] === data2.results[j].coordinates.latitude && lons[i] === data2.results[j].coordinates.longitude) {
@@ -199,7 +231,7 @@ function onMapMove() {
                     this.openPopup();
                 }).on("mouseout", function(e) {
                      this.closePopup();
-                });;
+                });
 
 
 
