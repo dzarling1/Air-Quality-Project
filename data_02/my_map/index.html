@@ -65,9 +65,24 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="item in locations">
-                <tr v-for="item in date">
+            <!--<tr v-for="location in locations">
+                <!--<tr v-for="item in table" v-if="item.location===locations[0]">
                     <td>{{item}}</td>
+                </tr>
+                <td>{{location}}</td>
+            </tr>-->
+            <tr v-for="item in row">
+                <td>{{item[0]}}</td>
+                <td>{{item[1]}}</td>
+                <td>{{item[2]}}</td>
+                <td>{{item[3]}}</td>
+                <td>{{item[4]}}</td>
+                <td>{{item[5]}}</td>
+                <td>{{item[6]}}</td>
+                <td>{{item[7]}}</td>
+            </tr>
+            <!--<tr v-for="item in table">
+                <td>{{item}}</td>
                 
                 <!--<td>{{item.location}}</td>
                 <td>{{item.date.local}}</td>

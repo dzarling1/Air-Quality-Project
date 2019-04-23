@@ -3,7 +3,8 @@ var app = new Vue({
     data: {
         table: [],
         locations: [],
-        date: []
+        date: [],
+        row: []
     }
 });
 
@@ -109,6 +110,7 @@ function onMapMove() {
             var locations = new Array();
             var dates = new Array();
             var values = new Array();
+            var amount = new Array();
             var units = new Array();
             var counts = new Array();
             var flag = 0;
@@ -124,14 +126,17 @@ function onMapMove() {
                     counts[j] = [0, 0, 0, 0, 0, 0];
                     lats[j] = data2.results[i].coordinates.latitude;
                     lons[j] = data2.results[i].coordinates.longitude;
-                    locations[j] = [data2.results[i].coordinates.latitude, data2.results[i].coordinates.longitude];
+                    locations[j] = data2.results[i].location;
                     dates[j] = [];
                 }
                 flag = 0;
             }
+            
             flag = 0;
             console.log(lats);
             console.log(lons);
+            app.lats = lats;
+            app.lons = lons;
             app.locations = locations;
             for (i = 0; i < lats.length; i++) {
                 for (j = 0; j < data2.results.length; j++) {
@@ -240,7 +245,61 @@ function onMapMove() {
             console.log(counts);
             console.log(units);
 
-
+            for(i=0;i<locations.length;i++){
+                amount[i]=new Array();
+            }
+            for(i=0;i<locations.length;i++){
+                for(j=0;j<dates[i].length;j++){
+                    amount[i][j] = [locations[i], dates[i][j], '---', '---', '---', '---', '---', '---'];
+                }
+            }
+            
+            for(i = 0; i < locations.length; i++) {
+                for(k = 0; k < dates[i].length; k++) {
+                    for(j = 0; j < data2.results.length; j++) {
+                        if (locations[i] === data2.results[j].location && dates[i][k] === data2.results[j].date.local){
+                            if(data2.results[j].parameter === 'o3'){
+                                amount[i][k][2] = data2.results[j].value.toString();
+                            }
+                            if(data2.results[j].parameter === 'pm25'){
+                                amount[i][k][3] = data2.results[j].value.toString();
+                            }
+                            if(data2.results[j].parameter === 'pm10'){
+                                amount[i][k][4] = data2.results[j].value.toString();
+                            }
+                            if(data2.results[j].parameter === 'co'){
+                                amount[i][k][5] = data2.results[j].value.toString();
+                            }
+                            if(data2.results[j].parameter === 'no2'){
+                                amount[i][k][6] = data2.results[j].value.toString();
+                            }
+                            if(data2.results[j].parameter === 'so2'){
+                                amount[i][k][7] = data2.results[j].value.toString();
+                            }
+                        }
+                    }
+                }
+            }
+            var rows = new Array();
+            var x = 0;
+            for(i = 0; i < locations.length; i++) {
+                for(k = 0; k < dates[i].length; k++) {
+                    rows[x] = new Array();
+                    x++;
+                }
+            }
+            x = 0;
+            for(i = 0; i < locations.length; i++) {
+                for(k = 0; k < dates[i].length; k++) {
+                    for(j = 0; j < 8; j++) {
+                        rows[x][j] = amount[i][k][j];
+                    }
+                    x++;
+                }
+            }
+            console.log(amount);
+            console.log(rows);
+            app.row = rows;
             /*for (i = 0; i < 10; i++) {
                 //console.log("Locations: " +data2.results[i].location);
                 lats = data2.results[i].coordinates.latitude;
