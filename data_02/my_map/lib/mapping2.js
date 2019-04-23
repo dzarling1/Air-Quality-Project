@@ -31,8 +31,14 @@ function moveByLatLon2() {
 
 var map2 = L.map('map2', {
     center: ([44.953705, -93.089958]),
-    zoom: 10
+    zoom: 10,
+    fullscreenControl: true
 });
+
+
+
+
+ 
 
 var cord = map2.getCenter();
 console.log(cord);
@@ -50,7 +56,7 @@ var layer = new L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.pn
 
 
 function onMapMove2() {
-    var cord = map.getCenter();
+    var cord = map2.getCenter();
     document.getElementById("lat2").value = cord.lat;
     document.getElementById("lon2").value = cord.lng;
     
@@ -84,6 +90,9 @@ function onMapMove2() {
             var j;
             var lats = new Array();
             var lons = new Array();
+            var values = new Array();
+            var units = new Array();
+            var counts = new Array();
             var flag = 0;
                  
             for (i = 0; i < data2.results.length; i++){
@@ -93,6 +102,8 @@ function onMapMove2() {
                     }
                 }
                 if(flag === 0) {
+                    values[j] = [0, 0, 0, 0, 0, 0];
+                    counts[j] = [0, 0, 0, 0, 0, 0];
                     lats[j] = data2.results[i].coordinates.latitude;
                     lons[j] = data2.results[i].coordinates.longitude;
                 }
@@ -100,42 +111,100 @@ function onMapMove2() {
             }
             console.log(lats);
             console.log(lons);
-
+            
             for (i = 0; i < lats.length; i++) {
-                for (i = 0; i < data2.results.length; i++){
+                for (j = 0; j < data2.results.length; j++){
                     if(lats[i] === data2.results[j].coordinates.latitude && lons[i] === data2.results[j].coordinates.longitude){
-
+                        if(data2.results[j].parameter === 'o3'){
+                            if(units[0] === undefined) {
+                                units[0] = data2.results[j].unit;
+                            }
+                            else if(units[0] !== data2.results[j].unit) {
+                                console.log("Uh oh units don't match");
+                            }
+                            values[i][0]+= data2.results[j].value;
+                            counts[i][0]++;
+                        }
+                        else if(data2.results[j].parameter === 'pm25') {
+                            if(units[1] === undefined) {
+                                units[1] = data2.results[j].unit;
+                            }
+                            else if(units[1] !== data2.results[j].unit) {
+                                console.log("Uh oh units don't match");
+                            }
+                            values[i][1]+= data2.results[j].value;
+                            counts[i][1]++;
+                        }
+                        else if(data2.results[j].parameter === 'pm10') {
+                            if(units[2] === undefined) {
+                                units[2] = data2.results[j].unit;
+                            }
+                            else if(units[2] !== data2.results[j].unit) {
+                                console.log("Uh oh units don't match");
+                            }
+                            values[i][2]+= data2.results[j].value;
+                            counts[i][2]++;
+                        }
+                        else if(data2.results[j].parameter === 'co') {
+                            if(units[3] === undefined) {
+                                units[3] = data2.results[j].unit;
+                            }
+                            else if(units[3] !== data2.results[j].unit) {
+                                console.log("Uh oh units don't match");
+                            }
+                            values[i][3]+= data2.results[j].value;
+                            counts[i][3]++;
+                        }
+                        else if(data2.results[j].parameter === 'no2') {
+                            if(units[4] === undefined) {
+                                units[4] = data2.results[j].unit;
+                            }
+                            else if(units[4] !== data2.results[j].unit) {
+                                console.log("Uh oh units don't match");
+                            }
+                            values[i][4]+= data2.results[j].value;
+                            counts[i][4]++;
+                        }
+                        else if(data2.results[j].parameter === 'so2') {
+                            if(units[5] === undefined) {
+                                units[5] = data2.results[j].unit;
+                            }
+                            else if(units[5] !== data2.results[j].unit) {
+                                console.log("Uh oh units don't match");
+                            }
+                            values[i][5]+= data2.results[j].value;
+                            counts[i][5]++;
+                        }
                         //add to sum
                     }
                 }
+                for (k = 0; k < 6; k++) {
+                    if(values[i][k] !== 0)
+                        values[i][k] = values[i][k]/counts[i][k];
+                }
                 //calculate averages for this location for each thing found
-                        var markers = L.marker([data2.results[j].coordinates.latitude, data2.results[j].coordinates.longitude]).addTo(map2)
-                        .bindPopup("Value: "+data2.results[j].value +"<br>"+ "Parameter: " +data2.results[j].parameter +"<br>"+ "Coordinates: " +data2.results[j].coordinates.latitude+" , " + data2.results[j].coordinates.longitude);
-                        map2.addLayer(markers);
-                        markers.on('mouseover',function(ev) {
-                          markers.openPopup();
-                        });
                 //Add marker for this location
-
-
-            }
-            /*for (i = 0; i < 10; i++) {
-                //console.log("Locations: " +data2.results[i].location);
-                lats = data2.results[i].coordinates.latitude;
-                logs = data2.results[i].coordinates.longitude;
-                //console.log("cords: " +lats + " l " + logs);
-                var markers = L.marker([lats, logs]).bindPopup("Location: "+data2.results[i].location +"<br>"+ "Parameter: " +data2.results[i].parameter).addTo(map);
-                map.addLayer(markers);
-
-                app = new Vue({
-                    el: '#firstTable',
-                    data: {
-                        table: []
-                    }
+                if(units[i] == 'undefined'){
+                    units[i] ="";
+                }
+                var markers = L.marker([lats[i], lons[i]]).addTo(map2);
+                
+               // map.addLayer(markers);
+               markers.bindPopup("Ozone: "+ values[i][0]+" " + units[0]+"<br>"+
+                    "PM2.5: "+ values[i][1]+ " " + units[1] + "<br>"+
+                    "PM10: " + values[i][2] + "  "+units[2] + "<br>"+
+                    "CO: " + values[i][3]+ " " + units[3]+ "<br>"+
+                    "NO2: "+  values[i][4]+ " " + units[4]+ "<br>"+
+                    "SO2: "+  values[i][5] + "  "+units[5]+"<br>"+
+                    "Coordinates: " + lats[i] +" , " + lons[i])
+                markers.on("mouseover", function() {
+                     this.openPopup();
                 });
-                app.table = data2;
-            }
-*/
+        }
+            console.log(values);
+            console.log(counts);
+            console.log(units);
+            
         }
     };
     xhttp.open("GET", "https://api.openaq.org/v1/measurements?limit=100&coordinates=" + document.getElementById("lat2").value + "," + document.getElementById("lon2").value + "&radius=" + radius, true);

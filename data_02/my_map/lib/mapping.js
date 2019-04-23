@@ -33,11 +33,27 @@ function moveByLatLon() {
 
 var map = L.map('map', {
     center: ([44.953705, -93.089958]),
-    zoom: 10
+    zoom: 10,
+     fullscreenControl: true
 });
 
 var cord = map.getCenter();
 console.log(cord);
+
+
+map.isFullscreen() // Is the map fullscreen?
+map.toggleFullscreen() // Either go fullscreen, or cancel the existing fullscreen.
+ 
+// `fullscreenchange` Event that's fired when entering or exiting fullscreen.
+map.on('fullscreenchange', function () {
+    if (map.isFullscreen()) {
+        console.log('entered fullscreen');
+    } else {
+        console.log('exited fullscreen');
+    }
+});
+ 
+L.Control.Fullscreen 
 /*
     var countriesLayer = L.geoJson(countries).addTo(map);
     map.fitBounds(countriesLayer.getBounds());
@@ -179,9 +195,13 @@ function onMapMove() {
                 }
                 //calculate averages for this location for each thing found
                 //Add marker for this location
-            
-                var markers = L.marker([lats[i], lons[i]]).addTo(map)
-                .bindPopup("Ozone: "+ values[i][0]+" " + units[0]+"<br>"+
+                if(units[i] == 'undefined'){
+                    units[i] ="";
+                }
+                var markers = L.marker([lats[i], lons[i]]).addTo(map);
+                
+               // map.addLayer(markers);
+               markers.bindPopup("Ozone: "+ values[i][0]+" " + units[0]+"<br>"+
                     "PM2.5: "+ values[i][1]+ " " + units[1] + "<br>"+
                     "PM10: " + values[i][2] + "  "+ units[2] + "<br>"+
                     "CO: " + values[i][3]+ " " + units[3]+ "<br>"+
@@ -191,7 +211,20 @@ function onMapMove() {
                 map.addLayer(markers);
                 markers.on("mouseover", function(e) {
                      markers.openPopup();
+                markers.on("mouseover", function() {
+                     this.openPopup();
                 });
+
+               
+        
+                /*
+                var myLayer = new L.GeoJSON();
+                myLayer.on("featureparse", function (e){
+                e.layer.on("mouseover", function () { alert("ON!") });
+                e.layer.on("mouseoff", function () { alert("OFF") });
+                });
+                myLayer.addGeoJSON(markers);
+               // map.addLayer(markers);*/
                 
 
                 markers.on("mouseout", function(e) {
