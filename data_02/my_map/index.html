@@ -1,93 +1,90 @@
 <!DOCTYPE html>
 <html>
 
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>
-            My Maps
-        </title>
-        <!-- Leaflet -->
-        <link rel="stylesheet" href="lib/leaflet/leaflet.css" />
-        <script src="lib/leaflet/leaflet.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-        <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
-        <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+        My Maps
+    </title>
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="lib/leaflet/leaflet.css" />
+    <script src="lib/leaflet/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
 
-    </head>
+</head>
 
-    <body>
+<body>
     <div class="fieldBlock">
-            <h1>Map1</h1>
-            Location:
-            <input type="text" id="loc">
-            <br>
-            <button onclick="moveByLocation()">Submit by location</button>
-            <br> Lat:
-            <input type="text" id="lat">
-            <br> Lon:
-            <input type="text" id="lon">
-            <br>
-            <button onclick="moveByLatLon()">Submit</button>
-        </div>
-      
-        <div class="fieldBlock1">
- 
-            <h1>Map2</h1>
-            Location:
-            <input type="text" id="loc2">
-            <br>
-            <button onclick="moveByLocation2()">Submit by location</button>
-            <br> Lat:
-            <input type="text" id="lat2">
-            <br> Lon:
-            <input type="text" id="lon2">
-            <br>
-            <button onclick="moveByLatLon2()">Submit</button>
-       </div> 
-        <div class="container">
-            <div id="map">
-            </div>
-            <div id="map2">
-            </div>
-            
-            <script src="lib/mapping2.js">
+        <h1>Map1</h1> Location:
+        <input type="text" id="loc">
+        <br>
+        <button onclick="moveByLocation()">Submit by location</button>
+        <br> Lat:
+        <input type="text" id="lat">
+        <br> Lon:
+        <input type="text" id="lon">
+        <br>
+        <button onclick="moveByLatLon()">Submit</button>
+    </div>
 
-            </script>
-            <script src="lib/mapping.js">
-            </script>
+    <div class="fieldBlock1">
+
+        <h1>Map2</h1> Location:
+        <input type="text" id="loc2">
+        <br>
+        <button onclick="moveByLocation2()">Submit by location</button>
+        <br> Lat:
+        <input type="text" id="lat2">
+        <br> Lon:
+        <input type="text" id="lon2">
+        <br>
+        <button onclick="moveByLatLon2()">Submit</button>
+    </div>
+    <div class="container">
+        <div id="map">
         </div>
-        
-        <script>
-            var currDate = new Date();
-            var priorDate = new Date().setDate(currDate.getDate()-30);
-            priorDate = new Date(priorDate);
-            var dateString = priorDate.toDateString();
-            console.log("Prior Date: " + dateString);
-            onMapMove(new Date().setDate(currDate.getDate()-1));
+        <div id="map2">
+        </div>
+
+        <script src="lib/mapping2.js">
         </script>
-        
-        <table id="firstTable">
-            <thead>
-                <tr>
-                    <th>Location</th>
-                    <th>Date</th>
-                    <th>Ozone</th>
-                    <th>PM2.5</th>
-                    <th>PM10</th>
-                    <th>CO</th>
-                    <th>NO2</th>
-                    <th>SO2</th>
-                </tr>
+        <script src="lib/mapping.js">
+        </script>
+    </div>
+
+    <script>
+        var currDate = new Date();
+        var priorDate = new Date().setDate(currDate.getDate() - 30);
+        priorDate = new Date(priorDate);
+        var dateString = priorDate.toDateString();
+        console.log("Prior Date: " + dateString);
+        onMapMove(new Date().setDate(currDate.getDate() - 1));
+    </script>
+
+    <table id="firstTable">
+        <thead>
+            <tr>
+                <th>Location</th>
+                <th>Date</th>
+                <th>Ozone</th>
+                <th>PM2.5</th>
+                <th>PM10</th>
+                <th>CO</th>
+                <th>NO2</th>
+                <th>SO2</th>
+            </tr>
         </thead>
         <tbody>
-        <tr v-for="item in table">
-            <td>{"lat: " + {item.coordinates.latitude} + ", lon: "+ {item.coordinates.longitude}}</td>
-            <td>{{item.date.utc}}</td>
-        </tr>
+            <tr v-for="item in table">
+                <td>{"lat: " + {item.coordinates.latitude} + ", lon: "+ {item.coordinates.longitude}}</td>
+                <td>{{item.date.utc}}</td>
+            </tr>
         </tbody>
-        </table>
+    </table>
 
-    </body>
+</body>
 
 </html>

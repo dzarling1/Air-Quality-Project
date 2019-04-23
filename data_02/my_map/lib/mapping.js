@@ -20,7 +20,7 @@ function moveByLocation() {
     };
     req.open("GET", "https://nominatim.openstreetmap.org/search?q=" + document.getElementById("loc").value + "&format=json&accept-language=en", true);
     req.send();
-    
+
     console.log("The transfer is complete (location).");
 }
 
@@ -34,30 +34,27 @@ function moveByLatLon() {
 var map = L.map('map', {
     center: ([44.953705, -93.089958]),
     zoom: 10,
-     fullscreenControl: true
+    fullscreenControl: true
+
 });
 
 var cord = map.getCenter();
 console.log(cord);
 
-
 map.isFullscreen() // Is the map fullscreen?
 map.toggleFullscreen() // Either go fullscreen, or cancel the existing fullscreen.
- 
+
 // `fullscreenchange` Event that's fired when entering or exiting fullscreen.
-map.on('fullscreenchange', function () {
+map.on('fullscreenchange', function() {
     if (map.isFullscreen()) {
         console.log('entered fullscreen');
     } else {
         console.log('exited fullscreen');
     }
 });
- 
-L.Control.Fullscreen 
-/*
-    var countriesLayer = L.geoJson(countries).addTo(map);
-    map.fitBounds(countriesLayer.getBounds());
-*/
+
+L.Control.Fullscreen
+
 var layer = new L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://mapbox.com">Mapbox</a>',
     maxZoom: 16,
@@ -70,14 +67,14 @@ function onMapMove() {
     var cord = map.getCenter();
     document.getElementById("lat").value = cord.lat;
     document.getElementById("lon").value = cord.lng;
-    
+
     var req = new XMLHttpRequest();
     req.onreadystatechange = function() {
         if (req.readyState == 4 && req.status == 200) {
             // successfully received data!
             var data1 = JSON.parse(req.responseText);
             console.log(data1);
-            if(typeof data1.address.city !== 'undefined')
+            if (typeof data1.address.city !== 'undefined')
                 document.getElementById("loc").value = data1.address.city;
             else
                 document.getElementById("loc").value = data1.address.county;
@@ -85,18 +82,18 @@ function onMapMove() {
     };
     req.open("GET", "https://nominatim.openstreetmap.org/reverse?format=json&lat=" + document.getElementById("lat").value + "&lon=" + document.getElementById("lon").value, true);
     req.send();
-    
-    var bounds = map.getBounds(); 
+
+    var bounds = map.getBounds();
     console.log(map.getBounds());
-    var radius = bounds._northEast.distanceTo(bounds._southWest)/2;
+    var radius = bounds._northEast.distanceTo(bounds._southWest) / 2;
     console.log("radius: " + radius);
-    
+
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             data2 = JSON.parse(xhttp.responseText);
             console.log(data2);
-            
+
             var i;
             var j;
             var lats = new Array();
@@ -105,14 +102,14 @@ function onMapMove() {
             var units = new Array();
             var counts = new Array();
             var flag = 0;
-                 
-            for (i = 0; i < data2.results.length; i++){
-                for(j = 0; j < lats.length; j++) {
-                    if (data2.results[i].coordinates.latitude === lats[j] && data2.results[i].coordinates.longitude === lons[j]){
+
+            for (i = 0; i < data2.results.length; i++) {
+                for (j = 0; j < lats.length; j++) {
+                    if (data2.results[i].coordinates.latitude === lats[j] && data2.results[i].coordinates.longitude === lons[j]) {
                         flag = 1;
                     }
                 }
-                if(flag === 0) {
+                if (flag === 0) {
                     values[j] = [0, 0, 0, 0, 0, 0];
                     counts[j] = [0, 0, 0, 0, 0, 0];
                     lats[j] = data2.results[i].coordinates.latitude;
@@ -122,118 +119,98 @@ function onMapMove() {
             }
             console.log(lats);
             console.log(lons);
-            
+
             for (i = 0; i < lats.length; i++) {
-                for (j = 0; j < data2.results.length; j++){
-                    if(lats[i] === data2.results[j].coordinates.latitude && lons[i] === data2.results[j].coordinates.longitude){
-                        if(data2.results[j].parameter === 'o3'){
-                            if(units[0] === undefined) {
+                for (j = 0; j < data2.results.length; j++) {
+                    if (lats[i] === data2.results[j].coordinates.latitude && lons[i] === data2.results[j].coordinates.longitude) {
+                        if (data2.results[j].parameter === 'o3') {
+                            if (units[0] === undefined) {
                                 units[0] = data2.results[j].unit;
-                            }
-                            else if(units[0] !== data2.results[j].unit) {
+                            } else if (units[0] !== data2.results[j].unit) {
                                 console.log("Uh oh units don't match");
                             }
-                            values[i][0]+= data2.results[j].value;
+                            values[i][0] += data2.results[j].value;
                             counts[i][0]++;
-                        }
-                        else if(data2.results[j].parameter === 'pm25') {
-                            if(units[1] === undefined) {
+                        } else if (data2.results[j].parameter === 'pm25') {
+                            if (units[1] === undefined) {
                                 units[1] = data2.results[j].unit;
-                            }
-                            else if(units[1] !== data2.results[j].unit) {
+                            } else if (units[1] !== data2.results[j].unit) {
                                 console.log("Uh oh units don't match");
                             }
-                            values[i][1]+= data2.results[j].value;
+                            values[i][1] += data2.results[j].value;
                             counts[i][1]++;
-                        }
-                        else if(data2.results[j].parameter === 'pm10') {
-                            if(units[2] === undefined) {
+                        } else if (data2.results[j].parameter === 'pm10') {
+                            if (units[2] === undefined) {
                                 units[2] = data2.results[j].unit;
-                            }
-                            else if(units[2] !== data2.results[j].unit) {
+                            } else if (units[2] !== data2.results[j].unit) {
                                 console.log("Uh oh units don't match");
                             }
-                            values[i][2]+= data2.results[j].value;
+                            values[i][2] += data2.results[j].value;
                             counts[i][2]++;
-                        }
-                        else if(data2.results[j].parameter === 'co') {
-                            if(units[3] === undefined) {
+                        } else if (data2.results[j].parameter === 'co') {
+                            if (units[3] === undefined) {
                                 units[3] = data2.results[j].unit;
-                            }
-                            else if(units[3] !== data2.results[j].unit) {
+                            } else if (units[3] !== data2.results[j].unit) {
                                 console.log("Uh oh units don't match");
                             }
-                            values[i][3]+= data2.results[j].value;
+                            values[i][3] += data2.results[j].value;
                             counts[i][3]++;
-                        }
-                        else if(data2.results[j].parameter === 'no2') {
-                            if(units[4] === undefined) {
+                        } else if (data2.results[j].parameter === 'no2') {
+                            if (units[4] === undefined) {
                                 units[4] = data2.results[j].unit;
-                            }
-                            else if(units[4] !== data2.results[j].unit) {
+                            } else if (units[4] !== data2.results[j].unit) {
                                 console.log("Uh oh units don't match");
                             }
-                            values[i][4]+= data2.results[j].value;
+                            values[i][4] += data2.results[j].value;
                             counts[i][4]++;
-                        }
-                        else if(data2.results[j].parameter === 'so2') {
-                            if(units[5] === undefined) {
+                        } else if (data2.results[j].parameter === 'so2') {
+                            if (units[5] === undefined) {
                                 units[5] = data2.results[j].unit;
-                            }
-                            else if(units[5] !== data2.results[j].unit) {
+                            } else if (units[5] !== data2.results[j].unit) {
                                 console.log("Uh oh units don't match");
                             }
-                            values[i][5]+= data2.results[j].value;
+                            values[i][5] += data2.results[j].value;
                             counts[i][5]++;
                         }
                         //add to sum
                     }
                 }
                 for (k = 0; k < 6; k++) {
-                    if(values[i][k] !== 0)
-                        values[i][k] = values[i][k]/counts[i][k];
+                    if (values[i][k] !== 0)
+                        values[i][k] = values[i][k] / counts[i][k];
                 }
                 //calculate averages for this location for each thing found
                 //Add marker for this location
-                if(units[i] == 'undefined'){
-                    units[i] ="";
+                if (units[i] == 'undefined') {
+                    units[i] = "";
                 }
                 var markers = L.marker([lats[i], lons[i]]).addTo(map);
-                
-               // map.addLayer(markers);
-               markers.bindPopup("Ozone: "+ values[i][0]+" " + units[0]+"<br>"+
-                    "PM2.5: "+ values[i][1]+ " " + units[1] + "<br>"+
-                    "PM10: " + values[i][2] + "  "+units[2] + "<br>"+
-                    "CO: " + values[i][3]+ " " + units[3]+ "<br>"+
-                    "NO2: "+  values[i][4]+ " " + units[4]+ "<br>"+
-                    "SO2: "+  values[i][5] + "  "+units[5]+"<br>"+
-                    "Coordinates: " + lats[i] +" , " + lons[i])
-                markers.on("mouseover", function() {
-                     this.openPopup();
-                });
 
-               
-        
-                /*
-                var myLayer = new L.GeoJSON();
-                myLayer.on("featureparse", function (e){
-                e.layer.on("mouseover", function () { alert("ON!") });
-                e.layer.on("mouseoff", function () { alert("OFF") });
-                });
-                myLayer.addGeoJSON(markers);
-               // map.addLayer(markers);
+                // map.addLayer(markers);
+                markers.bindPopup("Ozone: " + values[i][0] + " " + units[0] + "<br>" +
+                    "PM2.5: " + values[i][1] + " " + units[1] + "<br>" +
+                    "PM10: " + values[i][2] + "  " + units[2] + "<br>" +
+                    "CO: " + values[i][3] + " " + units[3] + "<br>" +
+                    "NO2: " + values[i][4] + " " + units[4] + "<br>" +
+                    "SO2: " + values[i][5] + "  " + units[5] + "<br>" +
+                    "Coordinates: " + lats[i] + " , " + lons[i])
+                markers.on("mouseover", function() {
+                    this.openPopup();
+                }).on("mouseout", function(e) {
+                     this.closePopup();
+                });;
+
                 
 /*
                 .on("mouseout", function(e) {
                      markers.closePopup();
                 });
-  */              
-        }
+  */
+            }
             console.log(values);
             console.log(counts);
             console.log(units);
-            
-            
+
             /*for (i = 0; i < 10; i++) {
                 //console.log("Locations: " +data2.results[i].location);
                 lats = data2.results[i].coordinates.latitude;
