@@ -183,44 +183,41 @@ function onMapMove() {
                 var markers = L.marker([lats[i], lons[i]]).addTo(map)
                 .bindPopup("Ozone: "+ values[i][0]+" " + units[0]+"<br>"+
                     "PM2.5: "+ values[i][1]+ " " + units[1] + "<br>"+
-                    "PM10: " + values[i][2] + "  "+units[2] + "<br>"+
+                    "PM10: " + values[i][2] + "  "+ units[2] + "<br>"+
                     "CO: " + values[i][3]+ " " + units[3]+ "<br>"+
                     "NO2: "+  values[i][4]+ " " + units[4]+ "<br>"+
-                    "SO2: "+  values[i][5] + "  "+units[5]+"<br>"+
+                    "SO2: "+  values[i][5] + "  "+ units[5]+"<br>"+
                     "Coordinates: " + lats[i] +" , " + lons[i])
-                //map.addLayer(markers);
+                map.addLayer(markers);
                 markers.on("mouseover", function(e) {
                      markers.openPopup();
                 });
                 
-/*
-                .on("mouseout", function(e) {
+
+                markers.on("mouseout", function(e) {
                      markers.closePopup();
-                });
-  */              
-        }
+                });            
+            }
             console.log(values);
             console.log(counts);
             console.log(units);
             
             
-            /*for (i = 0; i < 10; i++) {
-                //console.log("Locations: " +data2.results[i].location);
-                lats = data2.results[i].coordinates.latitude;
-                logs = data2.results[i].coordinates.longitude;
-                //console.log("cords: " +lats + " l " + logs);
-                var markers = L.marker([lats, logs]).bindPopup("Location: "+data2.results[i].location +"<br>"+ "Parameter: " +data2.results[i].parameter).addTo(map);
-                map.addLayer(markers);
+            //console.log("Locations: " +data2.results[i].location);
+            lats = data2.results[i].coordinates.latitude;
+            logs = data2.results[i].coordinates.longitude;
+            //console.log("cords: " +lats + " l " + logs);
+            var markers = L.marker([lats, logs]).bindPopup("Location: "+data2.results[i].location +"<br>"+ "Parameter: " +data2.results[i].parameter).addTo(map);
+            map.addLayer(markers);
 
-                app = new Vue({
-                    el: '#firstTable',
-                    data: {
-                        table: []
-                    }
-                });
-                app.table = data2;
-            }
-*/
+            app = new Vue({
+                el: '#firstTable',
+                data: {
+                    table: []
+                }
+            });
+            app.table = data2;
+
         }
     };
     xhttp.open("GET", "https://api.openaq.org/v1/measurements?limit=100&coordinates=" + document.getElementById("lat").value + "," + document.getElementById("lon").value + "&radius=" + radius, true);
