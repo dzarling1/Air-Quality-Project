@@ -78,10 +78,17 @@
             </tr>
         </thead>
         <tbody>
+<<<<<<< HEAD
             <tr v-for="item in table">
                 <td>{"lat: " + {item.coordinates.latitude} + ", lon: "+ {item.coordinates.longitude}}</td>
                 <td>{{item.date.utc}}</td>
             </tr>
+=======
+        <tr v-for="item in table">
+            <td>{"lat: " + {item.latitude} + ", lon: "+ {item.coordinates.longitude}}</td>
+            <td>{{item.date.utc}}</td>
+        </tr>
+>>>>>>> d4fb7c11e9440ae207e522022e1cf2c8a94f0ae4
         </tbody>
     </table>
 

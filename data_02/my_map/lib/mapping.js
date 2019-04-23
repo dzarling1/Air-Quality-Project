@@ -194,22 +194,20 @@ function onMapMove() {
                     "NO2: " + values[i][4] + " " + units[4] + "<br>" +
                     "SO2: " + values[i][5] + "  " + units[5] + "<br>" +
                     "Coordinates: " + lats[i] + " , " + lons[i])
+
                 markers.on("mouseover", function() {
                     this.openPopup();
                 }).on("mouseout", function(e) {
                      this.closePopup();
                 });;
 
-                
-/*
-                .on("mouseout", function(e) {
-                     markers.closePopup();
-                });
-  */
+
+
             }
             console.log(values);
             console.log(counts);
             console.log(units);
+
 
             /*for (i = 0; i < 10; i++) {
                 //console.log("Locations: " +data2.results[i].location);
@@ -219,14 +217,23 @@ function onMapMove() {
                 var markers = L.marker([lats, logs]).bindPopup("Location: "+data2.results[i].location +"<br>"+ "Parameter: " +data2.results[i].parameter).addTo(map);
                 map.addLayer(markers);
 
-                app = new Vue({
-                    el: '#firstTable',
-                    data: {
-                        table: []
-                    }
-                });
-                app.table = data2;
-            }
+            
+            
+            //console.log("Locations: " +data2.results[i].location);
+            lats = data2.results[i].coordinates.latitude;
+            logs = data2.results[i].coordinates.longitude;
+            //console.log("cords: " +lats + " l " + logs);
+            var markers = L.marker([lats, logs]).bindPopup("Location: "+data2.results[i].location +"<br>"+ "Parameter: " +data2.results[i].parameter).addTo(map);
+            map.addLayer(markers);
+
+            app = new Vue({
+                el: '#firstTable',
+                data: {
+                    table: []
+                }
+            });
+            app.table = data2;
+>>>>>>> d4fb7c11e9440ae207e522022e1cf2c8a94f0ae4
 */
         }
     };
