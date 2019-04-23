@@ -4,7 +4,8 @@ var app = new Vue({
         table: [],
         locations: [],
         date: [],
-        row: []
+        row: [],
+        color: '#00e400'
     }
 });
 
