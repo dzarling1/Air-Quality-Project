@@ -482,7 +482,7 @@
 
 #map{
       height:600px;
-      width:580px;
+      width:530px;
       background-color: gray;
       position: relative;
       float:left;
@@ -490,7 +490,7 @@
 
  #map2{
       height:600px;
-      width:580px;
+      width:530px;
       background-color: gray;
       background-color:red;
       position:relative;
@@ -528,10 +528,10 @@
 
 table  {
   font-family: 'Open Sans', sans-serif;
-  width: 750px;
+  width: flex;
   border-collapse: collapse;
   border: 3px solid #44475C;
-  margin: 10px 10px 0 10px;
+  
 }
 
 table th {
