@@ -1,15 +1,8 @@
 var app = new Vue({
     el: "#app",
     data: {
-<<<<<<< HEAD
-        table: [],
-        locations: [],
-        date: [],
-        row: []
-=======
         row1: [],
         row2: []
->>>>>>> ebe1fed56cb003ccdd5b3e6c63f4922ad61ba60a
     }
 });
 
@@ -91,6 +84,12 @@ var layer = new L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.pn
 }).addTo(map);
 
 function onMapMove() {
+    var currDate = new Date();
+    var priorDate = new Date();
+    priorDate.setDate(currDate.getDate() - 30);
+    console.log(priorDate);
+    var dateFrom = priorDate.getFullYear() + "-" + (priorDate.getMonth()+1) + "-" + priorDate.getDate();
+    console.log(dateFrom);
     var cord = map.getCenter();
     document.getElementById("lat").value = cord.lat;
     document.getElementById("lon").value = cord.lng;
@@ -363,26 +362,11 @@ function moveByLatLon2() {
 
 var map2 = L.map('map2', {
     center: ([44.953705, -93.089958]),
-    zoom: 10,
-    fullscreenControl: true
+    zoom: 10
 });
 
 var cord = map2.getCenter();
 console.log(cord);
-
-map2.isFullscreen() // Is the map fullscreen?
-map2.toggleFullscreen() // Either go fullscreen, or cancel the existing fullscreen.
-
-// `fullscreenchange` Event that's fired when entering or exiting fullscreen.
-map2.on('fullscreenchange', function() {
-    if (map2.isFullscreen()) {
-        console.log('entered fullscreen');
-    } else {
-        console.log('exited fullscreen');
-    }
-});
-
-L.Control.Fullscreen
 
 var layer = new L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://mapbox.com">Mapbox</a>',
@@ -635,7 +619,7 @@ function onMapMove2() {
             app.row2 = rows;
         }
     };
-    xhttp.open("GET", "https://api.openaq.org/v1/measurements?limit=100&coordinates=" + document.getElementById("lat").value + "," + document.getElementById("lon").value + "&radius=" + radius, true);
+    xhttp.open("GET", "https://api.openaq.org/v1/measurements?limit=1000&coordinates=" + document.getElementById("lat2").value + "," + document.getElementById("lon2").value + "&radius=" + radius + "&date_from=" + dateFrom, true);
     xhttp.send();
 }
 map2.on('moveend', onMapMove2);
