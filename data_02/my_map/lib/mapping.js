@@ -41,26 +41,41 @@ function moveByLatLon() {
 var map = L.map('map', {
     center: ([44.953705, -93.089958]),
     zoom: 10,
-    fullscreenControl: true
 
 });
 
 var cord = map.getCenter();
 console.log(cord);
 
-map.isFullscreen() // Is the map fullscreen?
-map.toggleFullscreen() // Either go fullscreen, or cancel the existing fullscreen.
 
-// `fullscreenchange` Event that's fired when entering or exiting fullscreen.
-map.on('fullscreenchange', function() {
-    if (map.isFullscreen()) {
-        console.log('entered fullscreen');
-    } else {
-        console.log('exited fullscreen');
-    }
-});
 
-L.Control.Fullscreen
+var elem = document.getElementById("map1");
+
+/* View in fullscreen */
+function openFullscreen() {
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.mozRequestFullScreen) { /* Firefox */
+    elem.mozRequestFullScreen();
+  } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE/Edge */
+    elem.msRequestFullscreen();
+  }
+}
+
+function closeFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.mozCancelFullScreen) { /* Firefox */
+    document.mozCancelFullScreen();
+  } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) { /* IE/Edge */
+    document.msExitFullscreen();
+  }
+}
+
 
 var layer = new L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://mapbox.com">Mapbox</a>',

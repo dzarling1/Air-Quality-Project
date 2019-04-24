@@ -482,7 +482,7 @@
 
 #map{
       height:600px;
-      width:530px;
+      width:100%;
       background-color: gray;
       position: relative;
       float:left;
@@ -490,7 +490,7 @@
 
  #map2{
       height:600px;
-      width:530px;
+      width:50%;
       background-color: gray;
       background-color:red;
       position:relative;
@@ -508,7 +508,7 @@
 
 .fieldBlock
     {
-    width: flex;
+    width: 100%;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -518,7 +518,7 @@
 
     .fieldBlock1
     {
-    width: flex;
+    width: 100%;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
