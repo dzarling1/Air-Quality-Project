@@ -72,6 +72,12 @@ var layer = new L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.pn
 }).addTo(map);
 
 function onMapMove() {
+    var currDate = new Date();
+    var priorDate = new Date();
+    priorDate.setDate(currDate.getDate() - 30);
+    console.log(priorDate);
+    var dateFrom = priorDate.getFullYear() + "-" + (priorDate.getMonth()+1) + "-" + priorDate.getDate();
+    console.log(dateFrom);
     var cord = map.getCenter();
     document.getElementById("lat").value = cord.lat;
     document.getElementById("lon").value = cord.lng;
@@ -329,7 +335,7 @@ function onMapMove() {
 */
         }
     };
-    xhttp.open("GET", "https://api.openaq.org/v1/measurements?limit=100&coordinates=" + document.getElementById("lat").value + "," + document.getElementById("lon").value + "&radius=" + radius, true);
+    xhttp.open("GET", "https://api.openaq.org/v1/measurements?limit=1000&coordinates=" + document.getElementById("lat").value + "," + document.getElementById("lon").value + "&radius=" + radius + "&date_from=" + dateFrom, true);
     xhttp.send();
 }
 map.on('moveend', onMapMove);
