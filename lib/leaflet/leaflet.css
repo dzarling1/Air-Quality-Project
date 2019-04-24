@@ -480,59 +480,54 @@
 
 
 
-#map{
-      height:600px;
-      width:100%;
+#map ,  #map2{
+       height: 600px;
+       width: 100%;
       background-color: gray;
       position: relative;
       float:left;
     }
 
- #map2{
-      height:600px;
-      width:50%;
-      background-color: gray;
-      background-color:red;
-      position:relative;
-      float:right;
-    }
-
 
   .container {
-    width: 1200px;
+    width: 1000px;
      margin-right: auto;
      margin-left: auto;
-     height: auto;
+     display: flex;
 }
 
 
 .fieldBlock
     {
-    width: 100%;
-  padding: 12px;
+   width: 100%;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: vertical;
+  padding: 10px;
   float: left;
     }
 
     .fieldBlock1
     {
     width: 100%;
-  padding: 12px;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: vertical;
   float: right;
+    padding: 10px;
+
     }
 
 table  {
-  font-family: 'Open Sans', sans-serif;
-  width: flex;
+  width: 800px;
   border-collapse: collapse;
   border: 3px solid #44475C;
   
 }
+
+ #Legend  {
+  width: 300px;
+  border-collapse: collapse;
+  border: 3px solid #44475C;
+  
+}
+
 
 table th {
   text-transform: uppercase;
@@ -555,3 +550,16 @@ table tbody tr:nth-child(2n) td {
   background: #D4D8F9;
 }
 
+
+#nav a:link, a:visited {
+  background-color: #f44336;
+  color: white;
+  padding: 14px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+#nav a:hover, a:active {
+  background-color: red;
+}

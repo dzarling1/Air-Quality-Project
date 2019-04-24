@@ -16,18 +16,18 @@
 </head>
 
 <body>
-
+        <div id="nav">
+        <a href="aboutProject.html">About the Project</a>
+        </div>
     <div id="app">
 
-        <div class="container">
-
-            <div class="fieldBlock">
-                             <div controls id="map1">
-
+        <div class="container"> 
+        <div class="fieldBlock">
+            <div  id="map1">
                 <div id="map">
 
                 </div>
-                <h1>Map1</h1> Location:
+                <center><h1>Map1</h1> Location:
                 <input type="text" id="loc">
                 <br>
                 <button onclick="moveByLocation()">Submit by location</button>
@@ -36,20 +36,18 @@
                 <br> Lon:
                 <input type="text" id="lon">
                 <br>
-                <button onclick="moveByLatLon()">Submit</button><br>
-
+                <button onclick="moveByLatLon()">Submit</button>
+                <br>
+                <button onclick="openFullscreen();">Go Full Screen</button></center>
             </div>
+        </div>
 
-            </div>
+        <div class="fieldBlock1">
+            <div  id="maps2">
 
-            <button onclick="openFullscreen();">Go Full Screen</button>
-
-
-            <div class="fieldBlock1">
-                
                 <div id="map2">
                 </div>
-                <h1>Map2</h1> Location:
+                <center><h1>Map2</h1> Location:
                 <input type="text" id="loc2">
                 <br>
                 <button onclick="moveByLocation2()">Submit by location</button>
@@ -58,16 +56,16 @@
                 <br> Lon:
                 <input type="text" id="lon2">
                 <br>
-                <button onclick="moveByLatLon2()">Submit</button><br>
-                
+                <button onclick="moveByLatLon2()">Submit</button>
+                <br>
+                <button onclick="openFullscreen2();">Go Full Screen</button></center>
+
             </div>
+
         </div>
+       </div> 
 
-    
-
-   
-       
-        <table id="Legend">
+        <table id="Legend" >
             <thead>
                 <tr>
                     <th>Color</th>
