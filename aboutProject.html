@@ -42,6 +42,13 @@
   background-color: red;
 }
 
+
+ul {
+  list-style-type: square;
+  text-align: center;
+  list-style-position: inside;
+
+}
 		
 
 	</style>
@@ -55,26 +62,27 @@
 			<h1>Nominatim</h1>
 			<p>We used Nominatim API for requesting the data that the user wants ex: if user types st paul, it will map to st paul</p>
 		</div>
-		<center><video width="320" height="240" controls>
+		<center><video width="350" height="345" controls>
 		  <source src="img/demo.mp4" type="video/mp4">
 		  Your browser does not support the video tag.
 		</video></center>
 
 		<div id="person1">
 			<center><img src="img/dan.jpg" width="350" height="345">
-			<p>Daniel Zarling is a student at the University of St. Thomas studying Computer Science. He currently works at Walmart as a cashier part time and is searching for an internship. He also enjoys singing, cross-country skiing, and biking. </p></center>
+			<p>Daniel Zarling :<br> is a student at the University of St. Thomas studying Computer Science. He currently works at Walmart as a cashier part time and is searching for an internship. He also enjoys singing, cross-country skiing, and biking. </p></center>
 		
 			<center><img src="img/mo.jpg" width="350" height="345">
-			<p>Mohannad Abuhussain is a student at the University of St. Thomas Majoring in Information Systems and Bussniess Admistration Minor. He currently volunteering at PPL as a Data Analyst and is searching for an internship. </p></center>
+			<p>Mohannad Abuhussain :<br> is a student at the University of St. Thomas Majoring in Information Systems and Bussniess Admistration Minor. He currently volunteering at PPL as a Data Analyst and is searching for an internship. </p></center>
 		</div>
 	</div>
-
-	<div id='findings'>
+	<center><h1> Interesting Findings</h1></center>
 		<ul>
-			<li></li>
+			<li>St paul/Minneapolis not as bad as expected (very little readings with rating orange or higher).</li>
+			<li>Europe appears to measure everything in µg/m³ which differs from the EPA uses for their ratings.</li>
+			<li>The ozone in Bakersfield, CA had many orange rating readings and even a few red ratings.</li>
+			<li>New York City appears to be better than Minneapolis/St Paul in all categories.</li>
+			<li>Fairbanks, AK has very low readings overall.</li>
+			<li>Orlando, FL has many orange and a few red rated readings for ozone.</li>
 		</ul>
-
-
-	</div>	
 </body>
 </html>
